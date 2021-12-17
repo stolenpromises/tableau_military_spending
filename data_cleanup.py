@@ -36,9 +36,8 @@ countries = countries_selection['country']  # extract the select countries
 # filter population and account balance data to include only the selection
 countries_populations = pd.read_excel(r'countries_population.xls')
 # attempting to filter by country
-c_populations_selection = countries_populations.loc[countries['country'] is in countries_populations['Country Name'],]
 # we seem to have a syntax error... let's poke around
-countries_populations.xs['South Africa']
+# countries_populations.xs['South Africa']
 # 'method' object is not subscriptable
 countries_populations.dtypes
 # the country column of the dataset are all type() = object
@@ -46,7 +45,7 @@ countries_populations.dtypes
 # indexing
 countries_populations.loc[:, 'Country Name']
 countries_populations.loc[0, 'Country Name']
-countries.loc[0, 'country']
+countries.loc[0]  # indexing on series does not include a column index
 # filter series is the correct type for matching
 type(countries[0])
 # string conversion of objects at a particular index
@@ -61,7 +60,44 @@ for index in range(len(countries_populations)):
 # did it work?
 type(countries_populations.loc[0, 'Country Name'])
 # win, perhaps now we can filter by the countries series
-
-
+# filter based on a row query
+s_cpop = countries_populations[countries_populations['Country Name'] == 'Canada']
+# the filter is matching based on the string key
+# the dataset was spoiled earlier though... troubleshoot
 # =============================================================================
+# database spoiled earlier... why? suspect object to str type conversion
+# =============================================================================
+c_pop = pd.read_excel(r'countries_population.xls')
+for index in range(len(c_pop)):
+    # type conversion at index
+    name = str(c_pop.loc[index, 'Country Name'])
+    # set at index
+    c_pop.at[index, 'Country Name'] = name
+test = str(c_pop.loc[0, 'Country Name'])
+type(test) # conversion working
+# was missing column index... solved
+# =============================================================================
+# =============================================================================
+# the database is repaired... now try again at filtering based on country
+# =============================================================================
+s_c_pop = c_pop[c_pop['Country Name'] == 'Canada']
+# alright... we've got a working filter based on a string index
+# now we need to filter based on one of many keys
+## s_c_pop = c_pop[c_pop['Country Name'] in countries]
+# series is unhashable. appears related to dtype
+countries = pd.Series(countries_selection['country'], dtype=str)
+s_c_pop = c_pop[c_pop['Country Name'] in countries]
+# countries.loc[countries == 'Canada']
+# above is sucessfully matching within the series based on a key
+# s_c_pop = c_pop[c_pop['Country Name'] in countries.loc['Canada']
+True == countries.str.contains(countries['country'])
+'Canada' in countries.items()
+
+countries.loc['country'] == 'Canada'
+
+for country in countries.items():
+    print(country{value})
+testtuple = (91, 'Yemen')
+print(testtuple[1])
+
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
