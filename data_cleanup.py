@@ -31,8 +31,28 @@ c_selection = pd.DataFrame(pd.read_csv(r'countries_selection.csv'),
 countries_selection = pd.read_csv(r'countries_selection.csv',
                                   names=selectionlist)
 # now we have a dataframe with a proper header
+countries = countries_selection['country']  # extract the select countries
 # =============================================================================
-# next
-# =============================================================================
+# filter population and account balance data to include only the selection
 countries_populations = pd.read_excel(r'countries_population.xls')
+# attempting to filter by country
+c_populations_selection = countries_populations.loc[countries['country'] is in countries_populations['Country Name'],]
+# we seem to have a syntax error... let's poke around
+countries_populations.xs['South Africa']
+# 'method' object is not subscriptable
+countries_populations.dtypes
+# the country column of the dataset are all type() = object
+# conversion to str() required
+# indexing
+countries_populations.loc[:, 'Country Name']
+countries_populations.loc[0, 'Country Name']
+countries.loc[0, 'country']
+# filter series is the correct type for matching
+type(countries[0])
+# string conversion of objects at a particular index
+test = str(countries_populations.loc[0, 'Country Name'])
+type(test) # conversion working
+
+
+# =============================================================================
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
