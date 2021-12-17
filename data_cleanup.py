@@ -10,7 +10,7 @@ Created on Sun Dec 12 12:35:11 2021
 import pandas as pd
 import os
 print(os.getcwd())
-
+## = troubleshooting lines of code. these lines should not be run.
 # =============================================================================
 # read the datasets into dataframes
 # =============================================================================
@@ -86,18 +86,35 @@ s_c_pop = c_pop[c_pop['Country Name'] == 'Canada']
 ## s_c_pop = c_pop[c_pop['Country Name'] in countries]
 # series is unhashable. appears related to dtype
 countries = pd.Series(countries_selection['country'], dtype=str)
-s_c_pop = c_pop[c_pop['Country Name'] in countries]
-# countries.loc[countries == 'Canada']
+##s_c_pop = c_pop[c_pop['Country Name'] in countries]
+## countries.loc[countries == 'Canada']
 # above is sucessfully matching within the series based on a key
-# s_c_pop = c_pop[c_pop['Country Name'] in countries.loc['Canada']
-True == countries.str.contains(countries['country'])
-'Canada' in countries.items()
-
-countries.loc['country'] == 'Canada'
-
-for country in countries.items():
-    print(country{value})
-testtuple = (91, 'Yemen')
-print(testtuple[1])
+## troubleshooting
+## s_c_pop = c_pop[c_pop['Country Name'] in countries.loc['Canada']
+## True == countries.str.contains(countries['country'])
+## 'Canada' in countries.values
+## countries.loc['country'] == 'Canada'
+## for country in countries.items():
+##   print(country{value})
+#testtuple = (91, 'Yemen')
+print(countries.values)
+# ahh.... values.... duh
+##s_c_pop = c_pop[c_pop['Country Name'] in countries.values]
+# above requires lengths to match... perhaps a for loop over each item
+# do i need to set an initial datatype for the dataframe append target?
+## d = {'country': [str()], 'floater': []}
+## s_c_pop = pd.DataFrame(data = {['country':, dtype=str], ['floater': dtype=float]})
+d = {'country': [], 'floater': []}
+s_c_pop = pd.DataFrame(data=d)
+# ok, we have created a dataframe with a header...
+# perhaps a blank dataframe can be appended to...
+s_c_pop = pd.DataFrame()
+appended_df = s_c_pop.append({'country': 'argentina', 'floater': 3.445}, ignore_index=True)
+# we can append a dataframe and it's our choice if we use lines to extract
+for index in range(len(c_pop)):  # iterate over each item in c_pop
+    if c_pop.loc[index, 'Country Name'] in countries.values:
+        # country selection match - append to new dataframe
+        
+list1[]
 
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
