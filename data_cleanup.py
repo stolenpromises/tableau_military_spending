@@ -52,6 +52,15 @@ type(countries[0])
 # string conversion of objects at a particular index
 test = str(countries_populations.loc[0, 'Country Name'])
 type(test) # conversion working
+# perhaps a for loop over country name?
+for index in range(len(countries_populations)):
+    # type conversion at index
+    name = str(countries_populations.loc[index, 'Country Name'])
+    # set at index
+    countries_populations.at[index] = name
+# did it work?
+type(countries_populations.loc[0, 'Country Name'])
+# win, perhaps now we can filter by the countries series
 
 
 # =============================================================================
