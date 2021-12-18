@@ -114,7 +114,29 @@ appended_df = s_c_pop.append({'country': 'argentina', 'floater': 3.445}, ignore_
 for index in range(len(c_pop)):  # iterate over each item in c_pop
     if c_pop.loc[index, 'Country Name'] in countries.values:
         # country selection match - append to new dataframe
-        
-list1[]
-
+        s_c_pop = s_c_pop.append(c_pop.loc[index])
+# sucess! we have created a new dataframe based on the key search
+# =============================================================================
+# now need to store country codes and resolve/investigate why our filtered
+# dataframe has only 74 rows vs the 94 of the select country dataframe
+# =============================================================================
+# lets do a sort based on name, so that the country list and the s_c_pop
+# dataframes are easier to analyze
+countries_selection = countries_selection.sort_values(by="country")
+# perhaps easier to do a boolean of what was NOT included
+countries_missing = pd.DataFrame()
+for index in range(len(c_pop)):  # iterate over each item
+    if c_pop.loc[index, 'Country Name'] not in countries.values:
+        # country selection match - append to new dataframe
+        countries_missing = countries_missing.append(c_pop.loc[index])
+# i think it makes sense to conform to the world bank's choice of country name
+# so we need to mute the countries_selection list to conform to that
+c_miss_conform = pd.DataFrame()
+for index in [8, 67, 126, 193, 202, 251, 257, 259]:  # iterate over the misses
+    c_miss_conform = c_miss_conform.append(c_pop.loc[index])#  append them
+# so these are our misses. it seems to make sense to explore an alias solution
+# =============================================================================
+# we need an alias solution. also we need a master country_selection dataframe
+# which contains only countries
+# =============================================================================
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
