@@ -8,6 +8,7 @@ Created on Sun Dec 12 12:35:11 2021
 @author: nathan.m
 """
 import pandas as pd
+import numpy as np
 import os
 print(os.getcwd())
 ## = troubleshooting lines of code. these lines should not be run.
@@ -142,6 +143,75 @@ for index in [8, 67, 126, 193, 202, 251, 257, 259]:  # iterate over the misses
 # countries_selection needs to be stored as what it actually is...
 # countries selection per-capita
 c_s_percapita = pd.DataFrame(countries_selection)
-# now lets create a new dataframe to include only countries and aliases
+# now lets create a new dataframe to include only countries
 c_select = pd.DataFrame(countries_selection['country'], dtype=str)
+# add a column for an alias list
+alias_df = pd.DataFrame({'aliases': []})
+# empty dataframe of lists created... can we join it?
+join_df = c_select.join(alias_df)
+# yes we can... can we add a string to an entry?
+## join_df.at[19, 'aliases'] = np.array(['test'])
+# interpreter is complaining of 'setting an array element with a sequence'...
+# what type is the target element?
+type(join_df.at[19, 'aliases'])  # hmm... it's a float64
+join_df.at[19, 'aliases'] = np.array([64.6])  # setting with a float works
+# so why is this array a float array, when I specificed dtype above?
+alias_df = pd.DataFrame({'aliases': []}, dtype=str)  # specify the dtype?
+join_df = c_select.join(alias_df)
+type(join_df.at[19, 'aliases'])  # now a float... ?
+print(join_df.at[19, 'aliases'])
+emptylist = []
+type(emptylist)
+emptylist.append('teststr')
+# wait a minute... we should be able to just append to an empty list
+join_df.at[19, 'aliases'] = np.array([64.6])
+alias_df = pd.DataFrame({'aliases': ['']})  # an empty list perhaps?
+type(join_df.at[19, 'aliases'])
+join_df.at[19, 'aliases'] = ['test']  # sucess... hmm
+type(join_df.at[19, 'aliases'])  # so an empty list will work fine?
+alias_df = pd.DataFrame({'aliases': ['']})
+join_df = c_select.join(alias_df)
+join_df.at[19, 'aliases'] = ['test']  # confirmed
+# adding aliases to the existing list is going to require checking for nan
+# =============================================================================
+# We've got a working framework for a country and [aliases] dataframe
+# Now we'll need to write some code for appending to it. I smell def incoming
+# =============================================================================
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
