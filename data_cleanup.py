@@ -139,4 +139,9 @@ for index in [8, 67, 126, 193, 202, 251, 257, 259]:  # iterate over the misses
 # we need an alias solution. also we need a master country_selection dataframe
 # which contains only countries
 # =============================================================================
+# countries_selection needs to be stored as what it actually is...
+# countries selection per-capita
+c_s_percapita = pd.DataFrame(countries_selection)
+# now lets create a new dataframe to include only countries and aliases
+c_select = pd.DataFrame(countries_selection['country'], dtype=str)
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
