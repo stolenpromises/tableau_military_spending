@@ -83,7 +83,6 @@ class CountryData(object):
             self.countries_selection = self.rawdata
         # establish baseline country list and aliases
         self.countries = country_build(self.countries_selection)
-        print(self.countries)
         self.datasets = []
     def get_data(self, datasets = []):
         """Return cleaned DataFrames from the parent CountryData class.
@@ -104,8 +103,32 @@ class CountryData(object):
         datasets : LIST
             List of DATAFRAME objects, country specific data.
         """
-        print(self.countries)
         return(self.countries)
+    def set_alias(self, country, alias):
+        """Append an alias for a country.
+
+        Given a country name found in CountryData.countries DataFrame'country'
+        appends a new alias for that country.
+
+        Parameters
+        ----------
+        country : STR
+            Country name.
+        alias : STR
+            Alias to append.
+
+        Returns
+        -------
+        print() statement of the target country row.
+
+        """
+        # check for the country within CountryData.countries DataFrame
+        if country in self.countries['country'].values:
+            # a match has been found - append the alias
+            existing_aliases = self.countries.loc['country': country]
+        else:  # country not found in DataFrame
+            print('Country not found in CountryData.countries')
+            return()
 clist = CountryData('countries_selection.csv')
 test = clist.get_data()
 print(test)
