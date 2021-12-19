@@ -123,15 +123,28 @@ class CountryData(object):
 
         """
         # check for the country within CountryData.countries DataFrame
-        if country in self.countries['country'].values:
+        countries = self.countries  # abstraction for code simplification
+        if country in countries['country'].values:
             # a match has been found - append the alias
-            
-            existing_aliases = self.countries.at['country': country]
-            #if existing_aliases = 
+            # abstract out the target country
+            target_c = countries.loc[countries['country'] == country]
+            target_index = target_c.index.tolist()[0]  # country index
+            existing_aliases = countries.at[target_index, 'aliases']
+            if type(existing_aliases) is list:  # aliases exist
+                countries[target_index, 'aliases'].append(alias)  # append
+            else:  # no aliases yet
+                countries[target_index, 'aliases'] = [alias]  # set a list
         else:  # country not found in DataFrame
             print('Country not found in CountryData.countries')
             return()
-
+        # update countries DataFrame
+        self.countries = countries
+        # print the outcome
+        print()
+        print('country DataFrame updated')
+        self.countries.loc[countries['country'] == country]
+        print()
+        return()
     def get_alias(self, country):
         """Return a list of aliases for a given country.
 
@@ -152,6 +165,8 @@ class CountryData(object):
 clist = CountryData('countries_selection.csv')  # instantiate the object
 test = clist.get_data()  # use the get_data method to draw out a DataFrame
 print(test)  # print the dataframe
+# set_alias method test
+# test.set_alias()
 
 
 # =============================================================================

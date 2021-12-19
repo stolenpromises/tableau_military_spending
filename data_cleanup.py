@@ -190,11 +190,10 @@ countryname = 'Taiwan'  # test query
 countries['country'] == 'Taiwan'  # this works to pull out a truth/false table
 countries.loc[countries['country'] == 'Taiwan']
 # now we are pulling out a series with the original index number...
-
-
-
-
-
+indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()
+# now we have pulled the original index as a list
+indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()[0]
+# now we have an int.. we can use this for our set_alias method
 
 
 
