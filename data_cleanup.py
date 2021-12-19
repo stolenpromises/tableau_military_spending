@@ -169,7 +169,7 @@ alias_df = pd.DataFrame({'aliases': ['']})  # an empty list perhaps?
 type(join_df.at[19, 'aliases'])
 join_df.at[19, 'aliases'] = ['test']  # sucess... hmm
 type(join_df.at[19, 'aliases'])  # so an empty list will work fine?
-alias_df = pd.DataFrame({'aliases': ['']})
+alias_df = pd.DataFrame({'aliases': []})
 join_df = c_select.join(alias_df)
 join_df.at[19, 'aliases'] = ['test']  # confirmed
 # adding aliases to the existing list is going to require checking for nan
@@ -177,6 +177,9 @@ join_df.at[19, 'aliases'] = ['test']  # confirmed
 # We've got a working framework for a country and [aliases] dataframe
 # Now we'll need to write some code for appending to it. I smell def incoming
 # =============================================================================
+c_select = c_select.join(alias_df)  # append to the original dataframe
+
+
 countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
 
 

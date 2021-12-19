@@ -10,8 +10,8 @@ Created on Sat Dec 18 13:14:19 2021
 import pandas as pd
 import numpy as np
 import os
-class AliasLookup(object):
-    """Collection of country names along with known aliases."""
+class CountryData(object):
+    """Collection of country names, aliases and associated data."""
     def __init__(self, filename):
         """Instatiates an AliasLoopup object instance.
 
@@ -27,16 +27,6 @@ class AliasLookup(object):
         None.
 
         """
-        self.rawdata = pd.read_csv(r(filename))  # store dataframe csv import
-        # establish countries and years
-        # header row creation, if required
-        if self.rawdata.columns[0] != 'country':  # country NOT column label
-            # send for labelling
-            self.countries_selection = add_column_labels(filename)
-        else:
-            self.countries_selection = self.rawdata
-        # establish baseline country list and aliases
-        self.countries = country_build(countries_selection)
         def add_column_labels(filename):
             """Add column labels to a raw dataset.
 
@@ -60,6 +50,7 @@ class AliasLookup(object):
             # create a new dataframe with labels
             rawdata_labelled = pd.read_csv(filename, names=selectionlist)
             return rawdata_labelled
+
         def country_build(countries_selection):
             """Return a 2 column DataFrame of country and aliases.
 
@@ -82,12 +73,51 @@ class AliasLookup(object):
             alias_df = pd.DataFrame({'aliases': []})
             join_df = c_select.join(alias_df)  # append countries with aliases
             return join_df
-        def add_country(self, country, aliases:
-            """ Append a country to AliasLookup."""
-        def clr_country:
-        def get_alias: 
-        def set_alias:
+        self.rawdata = pd.read_csv(filename)  # store dataframe csv import
+        # establish countries and years
+        # header row creation, if required
+        if self.rawdata.columns[0] != 'country':  # country NOT column label
+            # send for labelling
+            self.countries_selection = add_column_labels(filename)
+        else:
+            self.countries_selection = self.rawdata
+        # establish baseline country list and aliases
+        self.countries = country_build(self.countries_selection)
+        print(self.countries)
+        self.datasets = []
+    def get_data(self, datasets = []):
+        """Return cleaned DataFrames from the parent CountryData class.
+
+        Parameters
+        ----------
+        countries : DATAFRAME
+            A dataframe with layout:
+                example:
+                          'country',  | 'aliases'
+                          ------------ ----------
+                    row0 | 'UAE',     | 'United Arab Emirates'
+                    row1 | 'Spain',   |  NUN
+        sets : LIST
+
+        Returns
+        -------
+        datasets : LIST
+            List of DATAFRAME objects, country specific data.
+        """
+        print(self.countries)
+        return(self.countries)
+clist = CountryData('countries_selection.csv')
+test = clist.get_data()
+print(test)
+
+#         def add_country(self, country, aliases:
+#             """ Append a country to AliasLookup."""
+#         def clr_country:
+#         def get_alias: 
+#         def set_alias:
+#         def get_countries:
+        
         
     
-pd.DataFrame(
-countries_selection = pd.read_csv(r'countries_selection.csv')
+# pd.DataFrame(
+# countries_selection = pd.read_csv(r'countries_selection.csv')
