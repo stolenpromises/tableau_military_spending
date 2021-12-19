@@ -84,7 +84,7 @@ class CountryData(object):
         # establish baseline country list and aliases
         self.countries = country_build(self.countries_selection)
         self.datasets = []
-    def get_data(self, datasets = []):
+    def get_data(self, datasets = []): #TODO dataset specification
         """Return cleaned DataFrames from the parent CountryData class.
 
         Parameters
@@ -125,22 +125,40 @@ class CountryData(object):
         # check for the country within CountryData.countries DataFrame
         if country in self.countries['country'].values:
             # a match has been found - append the alias
-            existing_aliases = self.countries.loc['country': country]
+            
+            existing_aliases = self.countries.at['country': country]
+            #if existing_aliases = 
         else:  # country not found in DataFrame
             print('Country not found in CountryData.countries')
             return()
-clist = CountryData('countries_selection.csv')
-test = clist.get_data()
-print(test)
 
-#         def add_country(self, country, aliases:
+    def get_alias(self, country):
+        """Return a list of aliases for a given country.
+
+        Parameters
+        ----------
+        country : STR
+            Country name.
+
+        Returns
+        -------
+        aliaslist : LIST
+            A list of aliases resolved from the parent CountryData object.
+
+        """
+
+
+# test code to draw out a dataframe for testing
+clist = CountryData('countries_selection.csv')  # instantiate the object
+test = clist.get_data()  # use the get_data method to draw out a DataFrame
+print(test)  # print the dataframe
+
+
+# =============================================================================
+# TODO methods
+#        def add_country(self, country, aliases:
 #             """ Append a country to AliasLookup."""
 #         def clr_country:
-#         def get_alias: 
 #         def set_alias:
 #         def get_countries:
-        
-        
-    
-# pd.DataFrame(
-# countries_selection = pd.read_csv(r'countries_selection.csv')
+# =============================================================================

@@ -177,14 +177,19 @@ join_df.at[19, 'aliases'] = ['test']  # confirmed
 # We've got a working framework for a country and [aliases] dataframe
 # Now we'll need to write some code for appending to it. I smell def incoming
 # =============================================================================
-c_select = c_select.join(alias_df)  # append to the original dataframe
-
-
-countries_account_balance = pd.read_excel(r'countries_account_balance.xls')
-
-
-
-
+# need some ways to attain index
+countries = test  # variable assignment from import.py memory scope
+countryname = 'Taiwan'  # test query
+# attain an index based on a country query
+## test.query('country == ', countryname)
+# index_label = int(test.query('country == ', countryname).index.tolist()[0])
+# query won't work because syntax required passing in a string as syntax
+# i need to pass in a string itself...# check if a list is already present
+##answer = countries.loc[:,'Taiwan']
+# this won't work because it only returns a string
+countries['country'] == 'Taiwan'  # this works to pull out a truth/false table
+countries.loc[countries['country'] == 'Taiwan']
+# now we are pulling out a series with the original index number...
 
 
 
