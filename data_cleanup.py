@@ -195,7 +195,11 @@ indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()
 # now we have pulled the original index as a list
 indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()[0]
 # now we have an int.. we can use this for our set_alias method
-
+# =============================================================================
+# OK. We are setting ailiases and getting them. We manually fix some aliases
+# and move toward getting output of the 3 datasets in question in a format
+# which should work well with tableau.
+# =============================================================================
 
 
 

@@ -10,8 +10,11 @@ Created on Sat Dec 18 13:14:19 2021
 import pandas as pd
 import numpy as np
 import os
+
+
 class CountryData(object):
     """Collection of country names, aliases and associated data."""
+
     def __init__(self, filename):
         """Instatiates an AliasLoopup object instance.
 
@@ -83,8 +86,9 @@ class CountryData(object):
             self.countries_selection = self.rawdata
         # establish baseline country list and aliases
         self.countries = country_build(self.countries_selection)
-        self.datasets = []
-    def get_data(self, datasets = []): #TODO dataset specification
+        self.datasets = []  # TODO
+
+    def get_data(self, datasets=[]):  # TODO dataset specification
         """Return cleaned DataFrames from the parent CountryData class.
 
         Parameters
@@ -104,6 +108,7 @@ class CountryData(object):
             List of DATAFRAME objects, country specific data.
         """
         return(self.countries)
+
     def set_alias(self, country, alias):
         """Append an alias for a country.
 
@@ -131,7 +136,7 @@ class CountryData(object):
             target_index = target_c.index.tolist()[0]  # country index
             existing_aliases = countries.at[target_index, 'aliases']
             if type(existing_aliases) is list:  # aliases exist
-                countries[target_index, 'aliases'].append(alias)  # append
+                countries.at[target_index, 'aliases'].append(alias)  # append
             else:  # no aliases yet
                 countries.at[target_index, 'aliases'] = [alias]  # set a list
         else:  # country not found in DataFrame
@@ -190,6 +195,10 @@ test = clist.get_data()  # use the get_data method to draw out a DataFrame
 print(test)  # print the dataframe
 # set_alias method test
 clist.set_alias('UAE', 'United Arab Emirates')
+# alias fixes which I noticed in earlier testing
+clist.set_alias('UAE', 'United Arab Emirates')
+
+
 test = clist.get_data()  # use the get_data method to return updated DataFrame
 # get_alias method test
 clist.get_alias('UAE')
@@ -199,6 +208,5 @@ clist.get_alias('Taiwan')
 #        def add_country(self, country, aliases:
 #             """ Append a country to AliasLookup."""
 #         def clr_country:
-#         def set_alias:
 #         def get_countries:
 # =============================================================================
