@@ -169,7 +169,7 @@ alias_df = pd.DataFrame({'aliases': ['']})  # an empty list perhaps?
 type(join_df.at[19, 'aliases'])
 join_df.at[19, 'aliases'] = ['test']  # sucess... hmm
 type(join_df.at[19, 'aliases'])  # so an empty list will work fine?
-alias_df = pd.DataFrame({'aliases': []})
+alias_df = pd.DataFrame({'aliases': ['']})
 join_df = c_select.join(alias_df)
 join_df.at[19, 'aliases'] = ['test']  # confirmed
 # adding aliases to the existing list is going to require checking for nan

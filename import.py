@@ -70,7 +70,7 @@ class CountryData(object):
             # draw out the country column
             c_select = pd.DataFrame(countries_selection['country'], dtype=str)
             # build an empty alias dataframe to append on
-            alias_df = pd.DataFrame({'aliases': []})
+            alias_df = pd.DataFrame({'aliases': ['']})
             join_df = c_select.join(alias_df)  # append countries with aliases
             return join_df
         self.rawdata = pd.read_csv(filename)  # store dataframe csv import
@@ -129,20 +129,21 @@ class CountryData(object):
             # abstract out the target country
             target_c = countries.loc[countries['country'] == country]
             target_index = target_c.index.tolist()[0]  # country index
+            print(target_index)
             existing_aliases = countries.at[target_index, 'aliases']
             if type(existing_aliases) is list:  # aliases exist
                 countries[target_index, 'aliases'].append(alias)  # append
             else:  # no aliases yet
-                countries[target_index, 'aliases'] = [alias]  # set a list
+                countries.at[target_index, 'aliases'] = [alias]  # set a list
         else:  # country not found in DataFrame
             print('Country not found in CountryData.countries')
             return()
         # update countries DataFrame
         self.countries = countries
-        # print the outcome
+        # print confirmation and the outcome
         print()
         print('country DataFrame updated')
-        self.countries.loc[countries['country'] == country]
+        print(self.countries.loc[countries['country'] == country])
         print()
         return()
     def get_alias(self, country):
@@ -166,9 +167,11 @@ clist = CountryData('countries_selection.csv')  # instantiate the object
 test = clist.get_data()  # use the get_data method to draw out a DataFrame
 print(test)  # print the dataframe
 # set_alias method test
-# test.set_alias()
-
-
+clist.set_alias('Taiwan', 'the only china')
+alias = 'the only china'
+target_index = 18
+test.at[target_index, 'aliases'].append(alias)
+test.at[target_index, 'aliases'] = ['test']
 # =============================================================================
 # TODO methods
 #        def add_country(self, country, aliases:
