@@ -129,7 +129,6 @@ class CountryData(object):
             # abstract out the target country
             target_c = countries.loc[countries['country'] == country]
             target_index = target_c.index.tolist()[0]  # country index
-            print(target_index)
             existing_aliases = countries.at[target_index, 'aliases']
             if type(existing_aliases) is list:  # aliases exist
                 countries[target_index, 'aliases'].append(alias)  # append
@@ -138,14 +137,14 @@ class CountryData(object):
         else:  # country not found in DataFrame
             print('Country not found in CountryData.countries')
             return()
-        # update countries DataFrame
-        self.countries = countries
+
         # print confirmation and the outcome
         print()
         print('country DataFrame updated')
         print(self.countries.loc[countries['country'] == country])
         print()
         return()
+
     def get_alias(self, country):
         """Return a list of aliases for a given country.
 
@@ -160,6 +159,29 @@ class CountryData(object):
             A list of aliases resolved from the parent CountryData object.
 
         """
+        # check for the country within CountryData.countries DataFrame
+        countries = self.countries  # abstraction for code simplification
+        if country in countries['country'].values:
+            # a match has been found - get the alias
+            # abstract out the target country
+            target_c = countries.loc[countries['country'] == country]
+            target_index = target_c.index.tolist()[0]  # country index
+            existing_aliases = countries.at[target_index, 'aliases']
+            if type(existing_aliases) is float:  # no aliases exist
+                print()
+                print('No aliases for', country)
+                print()
+                return()
+            else:  # aliases exist
+                print()
+                print(country, ' aliases are:', existing_aliases)
+                print()
+                return()
+        else:  # country not found in DataFrame
+            print()
+            print('Country not found in CountryData.countries')
+            print()
+            return()
 
 
 # test code to draw out a dataframe for testing
@@ -167,11 +189,11 @@ clist = CountryData('countries_selection.csv')  # instantiate the object
 test = clist.get_data()  # use the get_data method to draw out a DataFrame
 print(test)  # print the dataframe
 # set_alias method test
-clist.set_alias('Taiwan', 'the only china')
-alias = 'the only china'
-target_index = 18
-test.at[target_index, 'aliases'].append(alias)
-test.at[target_index, 'aliases'] = ['test']
+clist.set_alias('UAE', 'United Arab Emirates')
+test = clist.get_data()  # use the get_data method to return updated DataFrame
+# get_alias method test
+clist.get_alias('UAE')
+clist.get_alias('Taiwan')
 # =============================================================================
 # TODO methods
 #        def add_country(self, country, aliases:
