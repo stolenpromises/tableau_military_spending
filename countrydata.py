@@ -195,10 +195,6 @@ drawnDataFrame = clist.get_data()  # use the get_data method to draw out a DataF
 print(drawnDataFrame)  # print the dataframe
 # set_alias method test
 clist.set_alias('UAE', 'United Arab Emirates')
-# alias fixes which I noticed in earlier testing
-clist.set_alias('UAE', 'United Arab Emirates')
-
-
 test = clist.get_data()  # use the get_data method to return updated DataFrame
 # get_alias method test
 clist.get_alias('UAE')

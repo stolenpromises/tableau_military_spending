@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+import countrydata
 print(os.getcwd())
 ## = troubleshooting lines of code. these lines should not be run.
 # =============================================================================
@@ -124,7 +125,6 @@ for index in range(len(c_pop)):  # iterate over each item in c_pop
 # =============================================================================
 # lets do a sort based on name, so that the country list and the s_c_pop
 # dataframes are easier to analyze
-sys.exit()
 countries_selection = countries_selection.sort_values(by="country")
 # perhaps easier to do a boolean of what was NOT included
 countries_missing = pd.DataFrame()
@@ -181,7 +181,7 @@ type(join_df.at[19, 'aliases'])
 # Now we'll need to write some code for appending to it. I smell def incoming
 # =============================================================================
 # need some ways to attain index
-countries = drawnDataFrame  # variable assignment from import.py memory scope
+countries = countrydata.drawnDataFrame  # variable assignment from import.py memory scope
 countryname = 'Taiwan'  # test query
 # attain an index based on a country query
 ## test.query('country == ', countryname)
