@@ -191,8 +191,8 @@ class CountryData(object):
 
 # test code to draw out a dataframe for testing
 clist = CountryData('countries_selection.csv')  # instantiate the object
-test = clist.get_data()  # use the get_data method to draw out a DataFrame
-print(test)  # print the dataframe
+drawnDataFrame = clist.get_data()  # use the get_data method to draw out a DataFrame
+print(drawnDataFrame)  # print the dataframe
 # set_alias method test
 clist.set_alias('UAE', 'United Arab Emirates')
 # alias fixes which I noticed in earlier testing
@@ -203,6 +203,8 @@ test = clist.get_data()  # use the get_data method to return updated DataFrame
 # get_alias method test
 clist.get_alias('UAE')
 clist.get_alias('Taiwan')
+# TODO rename this file from 'import'.
+
 # =============================================================================
 # TODO methods
 #        def add_country(self, country, aliases:

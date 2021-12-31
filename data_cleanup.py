@@ -10,6 +10,7 @@ Created on Sun Dec 12 12:35:11 2021
 import pandas as pd
 import numpy as np
 import os
+import sys
 print(os.getcwd())
 ## = troubleshooting lines of code. these lines should not be run.
 # =============================================================================
@@ -50,8 +51,8 @@ countries.loc[0]  # indexing on series does not include a column index
 # filter series is the correct type for matching
 type(countries[0])
 # string conversion of objects at a particular index
-test = str(countries_populations.loc[0, 'Country Name'])
-type(test) # conversion working
+teststr = str(countries_populations.loc[0, 'Country Name'])
+type(teststr) # conversion working
 # perhaps a for loop over country name?
 for index in range(len(countries_populations)):
     # type conversion at index
@@ -123,6 +124,7 @@ for index in range(len(c_pop)):  # iterate over each item in c_pop
 # =============================================================================
 # lets do a sort based on name, so that the country list and the s_c_pop
 # dataframes are easier to analyze
+sys.exit()
 countries_selection = countries_selection.sort_values(by="country")
 # perhaps easier to do a boolean of what was NOT included
 countries_missing = pd.DataFrame()
@@ -179,7 +181,7 @@ type(join_df.at[19, 'aliases'])
 # Now we'll need to write some code for appending to it. I smell def incoming
 # =============================================================================
 # need some ways to attain index
-countries = test  # variable assignment from import.py memory scope
+countries = drawnDataFrame  # variable assignment from import.py memory scope
 countryname = 'Taiwan'  # test query
 # attain an index based on a country query
 ## test.query('country == ', countryname)
@@ -188,8 +190,8 @@ countryname = 'Taiwan'  # test query
 # i need to pass in a string itself...# check if a list is already present
 ##answer = countries.loc[:,'Taiwan']
 # this won't work because it only returns a string
-countries['country'] == 'Taiwan'  # this works to pull out a truth/false table
-countries.loc[countries['country'] == 'Taiwan']
+##countries['country'] == 'Taiwan'  # this works to pull out a truth/false table
+##countries[countries['country'] == 'Taiwan']
 # now we are pulling out a series with the original index number...
 indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()
 # now we have pulled the original index as a list
