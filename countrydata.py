@@ -193,13 +193,18 @@ class CountryData(object):
 clist = CountryData('countries_selection.csv')  # instantiate the object
 drawnDataFrame = clist.get_data()  # use the get_data method to draw out a DataFrame
 print(drawnDataFrame)  # print the dataframe
-# set_alias method test
+# set_aliases for missing countries from the selection
 clist.set_alias('UAE', 'United Arab Emirates')
+clist.set_alias('Egypt', 'Egypt, Arab Rep.')
+clist.set_alias('Korea, North', "Korea, Dem. People's Rep")
+clist.set_alias('Korea, South', "Korea, Rep.")
+clist.set_alias('Russia', "Russian Federation")
+clist.set_alias('USA', "United States")
+clist.set_alias('Viet Nam', "Vietnam")
 test = clist.get_data()  # use the get_data method to return updated DataFrame
 # get_alias method test
 clist.get_alias('UAE')
 clist.get_alias('Taiwan')
-# TODO rename this file from 'import'.
 
 # =============================================================================
 # TODO methods
