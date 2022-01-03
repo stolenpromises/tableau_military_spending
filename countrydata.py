@@ -15,7 +15,7 @@ import os
 class CountryData(object):
     """Collection of country names, aliases and associated data."""
 
-    def __init__(self, country_csv, datasets):
+    def __init__(self, country_csv, datasets, columns_unwanted=[]):
         """Instatiates an CountryData object instance.
 
         Stores a pandas DataFrame of countries as imported from a csv file.
@@ -78,7 +78,7 @@ class CountryData(object):
             join_df = c_select.join(alias_df)  # append countries with aliases
             return join_df
 
-        def dataset_clean(countries, df):
+        def dataset_clean(countries, df, columns_unwanted):
             """Return a processed dataframe based on a selection of countries.
 
             Parameters
@@ -88,12 +88,14 @@ class CountryData(object):
                     example:
                         columns | 'country', 'aliases'
                         rows | 'UAE', ['United Arab Emirates']
-            df : DataFrame
+            df : DATAFRAME
                 Many column DataFrame of countries and data by year
                     example:
                         columns | 'country', '1988', '1989'
                         rows | 'USA', 2000, 2200
                              | 'UAE', 1000, 1200
+            columns_unwanted : LIST of STR
+                List of strings identifying unwanted columns
 
             Returns
             -------
@@ -101,11 +103,28 @@ class CountryData(object):
                 Many column DataFrame containing relevant data for only select
                 countries
             """
+            df_clean = pd.DataFrame()  # output DataFrame to append to
+            # clean input DataFrame of unwanted columns
+            for column in df:  # iterate over column lables
+                if column in columns_unwanted:  # the column is unwanted
+                    del df[column]  # delete it
             # iterate over each DataFrame index row
-            for country in df[df["Country Name"]:  # iterate over rows
-                if country is in countries["country"]:  # country found
-                    # print(df[df["Country Name"] == country]
-                # else if country in  # alias found
+            for country in df["Country Name"]:  # iterate over rows
+                match = False  # match trigger
+                # iterate over select country primary names
+                for select_country in countries["country"]:
+                    if country == select_country:  # primary name match
+                        match = True
+                # iterate over select country aliases
+                for select_aliases in countries["country"]:  # alias list
+                    for alias in select_aliases:  # alias
+                        if alias == select_country:  # alias match
+                            match = True
+                if match is True:  # match was found
+                    # append the data
+                    # set 
+            return df_clean
+        self.columns_unwanted = columns_unwanted
         # store dataframe csv import
         self.countries_raw = pd.read_csv(country_csv)
         # establish countries and years
@@ -222,8 +241,13 @@ class CountryData(object):
             return()
 
 
-# test code to draw out a dataframe for testing
-clist = CountryData('countries_selection.csv')  # instantiate the object
+# unwanted columns that will be culled from all datasets
+columns_unwanted = ['Country Code']
+# input datasets
+datasets = ['countries_selection.csv', 'countries_populations.xls',
+            'countries_account_balance.xls']
+# object instantiation
+clist = CountryData('countries_selection.csv', datasets, columns_unwanted)
 
 # use the get_data method to draw out a DataFrame
 drawnDataFrame = clist.get_data()
