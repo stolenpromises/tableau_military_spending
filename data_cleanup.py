@@ -248,14 +248,22 @@ type(column_renames)
 column_renames.get('old_col1')
 # ok we can pass in renames easily...
 # and a draft is in place for renames and unwanted columns
-
-
-
-
-
-
-
-
+# now i'll draft a revised iteration using pandas iteration methods
+# test = df_clean['country']
+# for index, value in test.items():
+#     print(index)
+#     print(value)
+# ahh... i need to call the items() method on df['country']
+# I have been overthinking this... I can just use the .isin method:
+# test_c = s_c_pop[s_c_pop["Country Name"].isin(countries["country"])]
+# How can I use a similar call to .isin on the aliases lists?
+test_c = c_miss_conform[c_miss_conform["Country Name"].isin(countries["aliases"])]
+testcall = countries["aliases"]
+for key, value in testcall.items():
+    if type(value) is list:
+        print(value)
+# The above code pulls out alias lists... perhaps this will work
+countries["country"].istype
 
 
 
