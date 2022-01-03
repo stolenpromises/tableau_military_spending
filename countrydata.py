@@ -101,7 +101,11 @@ class CountryData(object):
                 Many column DataFrame containing relevant data for only select
                 countries
             """
-
+            # iterate over each DataFrame index row
+            for country in df[df["Country Name"]:  # iterate over rows
+                if country is in countries["country"]:  # country found
+                    # print(df[df["Country Name"] == country]
+                # else if country in  # alias found
         # store dataframe csv import
         self.countries_raw = pd.read_csv(country_csv)
         # establish countries and years

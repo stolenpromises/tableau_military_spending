@@ -206,13 +206,25 @@ indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()[0]
 # All relevant aliases are set. Now can move toward getting output of the 3
 # datasets in question.
 # =============================================================================
+# can we iterate over rows of DataFrames easily?
+for item in c_pop:
+    print(item)
+# hmmm... we are getting a column label output
+# what if we specify a column?
+countries_column = c_pop["Country Name"]
+for item in countries_column:
+    print(item)
+# gotum'... ok so we can iterate by country name now
+# this should allow us to slice out by index or by country name
+# it seems preferable to slice out by name, lets try that first
+country_row = c_pop[c_pop["Country Name"] == 'Aruba']
+# this works well... so now we have something to append to a new dataframe
 
 
 
-
-
-
-
+for item in countries["country"]:
+    print(item)
+    print(type(item))
 
 
 
