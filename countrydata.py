@@ -15,7 +15,8 @@ import os
 class CountryData(object):
     """Collection of country names, aliases and associated data."""
 
-    def __init__(self, country_csv, datasets, columns_unwanted=[]):
+    def __init__(self, country_csv, datasets, columns_unwanted=[],
+                 column_renames=[]):
         """Instatiates an CountryData object instance.
 
         Stores a pandas DataFrame of countries as imported from a csv file.
@@ -78,7 +79,7 @@ class CountryData(object):
             join_df = c_select.join(alias_df)  # append countries with aliases
             return join_df
 
-        def dataset_clean(countries, df, columns_unwanted):
+        def dataset_clean(countries, df, columns_unwanted, column_renames):
             """Return a processed dataframe based on a selection of countries.
 
             Parameters
@@ -96,6 +97,10 @@ class CountryData(object):
                              | 'UAE', 1000, 1200
             columns_unwanted : LIST of STR
                 List of strings identifying unwanted columns
+            column_renames : DICT
+                Dictionary of column names to rename
+                    example:
+                        {'old_col1':'new_col1', 'old_col2':'new_col2'}
 
             Returns
             -------
@@ -103,11 +108,24 @@ class CountryData(object):
                 Many column DataFrame containing relevant data for only select
                 countries
             """
-            df_clean = pd.DataFrame()  # output DataFrame to append to
+            # TODO testing DataFrame input
+            countries_populations = pd.read_excel(r'countries_population.xls')
+            df = pd.DataFrame(countries_populations)
+            df_clean = pd.DataFrame(df)  # output DataFrame to mute
+
             # clean input DataFrame of unwanted columns
             for column in df:  # iterate over column lables
-                if column in columns_unwanted:  # the column is unwanted
-                    del df[column]  # delete it
+                # check for unwanted columns
+                print(column)
+                if column in columns_unwanted:
+                    del df_clean[str(column)]  # delete it
+
+            # rename columns based on column_renames
+            df_clean.rename(columns = column_renames)
+
+            # revised iteration over DataFrame rows
+            for country in df["Country Name"]
+
             # iterate over each DataFrame index row
             for country in df["Country Name"]:  # iterate over rows
                 match = False  # match trigger
@@ -125,6 +143,7 @@ class CountryData(object):
                     # set 
             return df_clean
         self.columns_unwanted = columns_unwanted
+        self.column_renames = column_renames
         # store dataframe csv import
         self.countries_raw = pd.read_csv(country_csv)
         # establish countries and years
@@ -243,9 +262,14 @@ class CountryData(object):
 
 # unwanted columns that will be culled from all datasets
 columns_unwanted = ['Country Code']
+
+# column renames that will be applied to all datasets
+column_renames = {'Country Name': 'country'}
+
 # input datasets
 datasets = ['countries_selection.csv', 'countries_populations.xls',
             'countries_account_balance.xls']
+
 # object instantiation
 clist = CountryData('countries_selection.csv', datasets, columns_unwanted)
 

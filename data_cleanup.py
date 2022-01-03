@@ -219,18 +219,35 @@ for item in countries_column:
 # it seems preferable to slice out by name, lets try that first
 country_row = c_pop[c_pop["Country Name"] == 'Aruba']
 # this works well... so now we have something to append to a new dataframe
-
-
-
+for item in countries_populations["Country Name"]:
+    print(item)
+# we can iterate over country names in the target dataset
+# we are having trouble matching within the select country dataset...
+for item in countries["country"]:
+    print(item)
+'USA' in countries["country"]  # this turns up false.. why?
 for item in countries["country"]:
     print(item)
     print(type(item))
-
-
-
-
-
-
+    if item == 'USA':
+        print('match')
+# OK.. so the problem is that 'in' is not matching...
+match = False
+for item in countries["country"]:
+    if item == 'USA':
+        match = True
+print(match)
+# Gotta wonder why that works that way... oh well... moving on...
+# =============================================================================
+# I need to implement some column renaming and probably rework iteration code
+# within the datset_clean method. Let's practice this a bit...
+# =============================================================================
+column_renames = {'old_col1':'new_col1', 'old_col2':'new_col2'}
+'old_col1' in column_renames
+type(column_renames)
+column_renames.get('old_col1')
+# ok we can pass in renames easily...
+# and a draft is in place for renames and unwanted columns
 
 
 
