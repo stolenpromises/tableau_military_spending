@@ -121,143 +121,159 @@ class CountryData(object):
                     del df_clean[str(column)]  # delete it
 
             # rename columns based on column_renames
-            df_clean.rename(columns = column_renames)
+            df_clean = df_clean.rename(columns = column_renames)
 
             # revised iteration over DataFrame rows
-            for country in df["Country Name"]
-
-            # iterate over each DataFrame index row
-            for country in df["Country Name"]:  # iterate over rows
-                match = False  # match trigger
-                # iterate over select country primary names
-                for select_country in countries["country"]:
-                    if country == select_country:  # primary name match
-                        match = True
-                # iterate over select country aliases
-                for select_aliases in countries["country"]:  # alias list
-                    for alias in select_aliases:  # alias
-                        if alias == select_country:  # alias match
-                            match = True
-                if match is True:  # match was found
-                    # append the data
-                    # set 
-            return df_clean
-        self.columns_unwanted = columns_unwanted
-        self.column_renames = column_renames
-        # store dataframe csv import
-        self.countries_raw = pd.read_csv(country_csv)
-        # establish countries and years
-        # header row creation, if required
-        if self.countries_raw.columns[0] != 'country':  # country NOT found
-            # send for labelling
-            self.countries_selection = add_column_labels(country_csv)
-        else:  # country found
-            self.countries_selection = self.countries_raw
-        # establish baseline country list and aliases
-        self.countries = country_build(self.countries_selection)
-        self.datasets = datasets  # list of dataset filenames
-        self.df_raw = []  # list of raw dataframes before processing
-        self.df_processed = []  # list of processed dataframes
-            
-    def get_data(self, datasets=[]):  # TODO dataset specification
-        """Return cleaned DataFrames from the parent CountryData class.
-
-        Parameters
-        ----------
-        countries : DATAFRAME
-            A dataframe with layout:
-                example:
-                          'country',  | 'aliases'
-                          ------------ ----------
-                    row0 | 'UAE',     | 'United Arab Emirates'
-                    row1 | 'Spain',   |  NUN
-        sets : LIST
-
-        Returns
-        -------
-        datasets : LIST
-            List of DATAFRAME objects, country specific data.
-        """
-        return(self.countries)
-
-    def set_alias(self, country, alias):
-        """Append an alias for a country.
-
-        Given a country name found in CountryData.countries DataFrame'country'
-        appends a new alias for that country.
-
-        Parameters
-        ----------
-        country : STR
-            Country name.
-        alias : STR
-            Alias to append.
-
-        Returns
-        -------
-        print() statement of the target country row.
-
-        """
-        # check for the country within CountryData.countries DataFrame
-        countries = self.countries  # abstraction for code simplification
-        if country in countries['country'].values:
-            # a match has been found - append the alias
-            # abstract out the target country
-            target_c = countries.loc[countries['country'] == country]
-            target_index = target_c.index.tolist()[0]  # country index
-            existing_aliases = countries.at[target_index, 'aliases']
-            if type(existing_aliases) is list:  # aliases exist
-                countries.at[target_index, 'aliases'].append(alias)  # append
-            else:  # no aliases yet
-                countries.at[target_index, 'aliases'] = [alias]  # set a list
-        else:  # country not found in DataFrame
-            print('Country not found in CountryData.countries')
-            return()
-
-        # print confirmation and the outcome
-        print()
-        print('country DataFrame updated')
-        print(self.countries.loc[countries['country'] == country])
-        print()
-        return()
-
-    def get_alias(self, country):
-        """Return a list of aliases for a given country.
-
-        Parameters
-        ----------
-        country : STR
-            Country name.
-
-        Returns
-        -------
-        aliaslist : LIST
-            A list of aliases resolved from the parent CountryData object.
-
-        """
-        # check for the country within CountryData.countries DataFrame
-        countries = self.countries  # abstraction for code simplification
-        if country in countries['country'].values:
-            # a match has been found - get the alias
-            # abstract out the target country
-            target_c = countries.loc[countries['country'] == country]
-            target_index = target_c.index.tolist()[0]  # country index
-            existing_aliases = countries.at[target_index, 'aliases']
-            if type(existing_aliases) is float:  # no aliases exist
-                print()
-                print('No aliases for', country)
-                print()
-                return()
-            else:  # aliases exist
-                print()
-                print(country, ' aliases are:', existing_aliases)
-                print()
-                return()
-        else:  # country not found in DataFrame
-            print()
-            print('Country not found in CountryData.countries')
-            print()
-            return()
+            # iterate over column as a series
+            for index, c_clean in df_clean['country'].items():
+                print('c_clean is: ', c_clean)
+                # iterate over all countries and aliases
+                for label, series in countries.items():  # pull each series
+                    if c_clean in series:
+                        print('match')
+                    else:
+                        print('no_match')
+                    print('label is: ', label)
+                    print('series is: ', series)
+                break
+                #for index, value in countries["country"].items():
+                    #if country in value 
+# =============================================================================
+#             # iterate over each DataFrame index row
+#             for country in df["Country Name"]:  # iterate over rows
+#                 match = False  # match trigger
+#                 # iterate over select country primary names
+#                 for select_country in countries["country"]:
+#                     if country == select_country:  # primary name match
+#                         match = True
+#                 # iterate over select country aliases
+#                 for select_aliases in countries["country"]:  # alias list
+#                     for alias in select_aliases:  # alias
+#                         if alias == select_country:  # alias match
+#                             match = True
+#                 if match is True:  # match was found
+#                     # append the data
+#                     # set 
+#             return df_clean
+# =============================================================================
+# =============================================================================
+#         self.columns_unwanted = columns_unwanted
+#         self.column_renames = column_renames
+#         # store dataframe csv import
+#         self.countries_raw = pd.read_csv(country_csv)
+#         # establish countries and years
+#         # header row creation, if required
+#         if self.countries_raw.columns[0] != 'country':  # country NOT found
+#             # send for labelling
+#             self.countries_selection = add_column_labels(country_csv)
+#         else:  # country found
+#             self.countries_selection = self.countries_raw
+#         # establish baseline country list and aliases
+#         self.countries = country_build(self.countries_selection)
+#         self.datasets = datasets  # list of dataset filenames
+#         self.df_raw = []  # list of raw dataframes before processing
+#         self.df_processed = []  # list of processed dataframes
+#             
+#     def get_data(self, datasets=[]):  # TODO dataset specification
+#         """Return cleaned DataFrames from the parent CountryData class.
+# 
+#         Parameters
+#         ----------
+#         countries : DATAFRAME
+#             A dataframe with layout:
+#                 example:
+#                           'country',  | 'aliases'
+#                           ------------ ----------
+#                     row0 | 'UAE',     | 'United Arab Emirates'
+#                     row1 | 'Spain',   |  NUN
+#         sets : LIST
+# 
+#         Returns
+#         -------
+#         datasets : LIST
+#             List of DATAFRAME objects, country specific data.
+#         """
+#         return(self.countries)
+# 
+#     def set_alias(self, country, alias):
+#         """Append an alias for a country.
+# 
+#         Given a country name found in CountryData.countries DataFrame'country'
+#         appends a new alias for that country.
+# 
+#         Parameters
+#         ----------
+#         country : STR
+#             Country name.
+#         alias : STR
+#             Alias to append.
+# 
+#         Returns
+#         -------
+#         print() statement of the target country row.
+# 
+#         """
+#         # check for the country within CountryData.countries DataFrame
+#         countries = self.countries  # abstraction for code simplification
+#         if country in countries['country'].values:
+#             # a match has been found - append the alias
+#             # abstract out the target country
+#             target_c = countries.loc[countries['country'] == country]
+#             target_index = target_c.index.tolist()[0]  # country index
+#             existing_aliases = countries.at[target_index, 'aliases']
+#             if type(existing_aliases) is list:  # aliases exist
+#                 countries.at[target_index, 'aliases'].append(alias)  # append
+#             else:  # no aliases yet
+#                 countries.at[target_index, 'aliases'] = [alias]  # set a list
+#         else:  # country not found in DataFrame
+#             print('Country not found in CountryData.countries')
+#             return()
+# 
+#         # print confirmation and the outcome
+#         print()
+#         print('country DataFrame updated')
+#         print(self.countries.loc[countries['country'] == country])
+#         print()
+#         return()
+# 
+#     def get_alias(self, country):
+#         """Return a list of aliases for a given country.
+# 
+#         Parameters
+#         ----------
+#         country : STR
+#             Country name.
+# 
+#         Returns
+#         -------
+#         aliaslist : LIST
+#             A list of aliases resolved from the parent CountryData object.
+# 
+#         """
+#         # check for the country within CountryData.countries DataFrame
+#         countries = self.countries  # abstraction for code simplification
+#         if country in countries['country'].values:
+#             # a match has been found - get the alias
+#             # abstract out the target country
+#             target_c = countries.loc[countries['country'] == country]
+#             target_index = target_c.index.tolist()[0]  # country index
+#             existing_aliases = countries.at[target_index, 'aliases']
+#             if type(existing_aliases) is float:  # no aliases exist
+#                 print()
+#                 print('No aliases for', country)
+#                 print()
+#                 return()
+#             else:  # aliases exist
+#                 print()
+#                 print(country, ' aliases are:', existing_aliases)
+#                 print()
+#                 return()
+#         else:  # country not found in DataFrame
+#             print()
+#             print('Country not found in CountryData.countries')
+#             print()
+#             return()
+# =============================================================================
 
 
 # unwanted columns that will be culled from all datasets
