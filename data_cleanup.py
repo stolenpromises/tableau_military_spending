@@ -202,7 +202,10 @@ indextarget = countries.loc[countries['country'] == 'Taiwan'].index.tolist()[0]
 # and move toward getting output of the 3 datasets in question in a format
 # which should work well with tableau.
 # =============================================================================
-
+# =============================================================================
+# All relevant aliases are set. Now can move toward getting output of the 3
+# datasets in question.
+# =============================================================================
 
 
 
