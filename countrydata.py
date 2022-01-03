@@ -133,7 +133,7 @@ class CountryData(object):
                     for item in value:  # iterate over the aliases
                         aliaslist.append(item)  # append the alias
             df_clean_amatch = df_clean[df_clean["country"].isin(aliaslist)]
-            
+            df_concat = pd.concat([df_clean_cmatch, df_clean_amatch])
             # append the two together
             # revised iteration over DataFrame rows
             # iterate over select countries and aliases as a series

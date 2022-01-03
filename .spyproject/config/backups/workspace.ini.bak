@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['data_cleanup.py', 'import.py', '..\\..\\6.00.2x\\unit_4\\problem_set_4\\ps4.py']
+recent_files = ['data_cleanup.py', '..\\..\\6.00.2x\\unit_4\\problem_set_4\\ps4.py', 'countrydata.py']
 

@@ -263,9 +263,16 @@ for key, value in testcall.items():
     if type(value) is list:
         print(value)
 # The above code pulls out alias lists... perhaps this will work
-countries["country"].istype
-
-
-
-
-
+# =============================================================================
+# I've sucessfully sliced out countries and aliases into two seperate
+# DataFrames. Now I need to merge them.
+# =============================================================================
+# my merge() method call is outputting a blank DataFrame... why is this?
+# looks like I may have been confused and should be trying the concat() method
+# df_concat = pd.concat([df_clean_cmatch, df_clean_amatch])
+# sucess.. concat() is the correct method for this
+# we've only got 80 entries... why is this?
+# lets filter countries for !isin() to see what didn't make the final cut
+# looks like drop() function is the way to go
+# dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
+# sucess... now I can analyze the 20 or so countries that are missing
