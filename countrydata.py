@@ -110,10 +110,15 @@ class CountryData(object):
             """
             # TODO testing DataFrame input
             countries = pd.DataFrame(drawnDataFrame)
+
             countries_populations = pd.read_excel(r'countries_population.xls')
             df = pd.DataFrame(countries_populations)
+            # TODO end testing DataFrame input
+
             df_clean = pd.DataFrame(df)  # output DataFrame to mute
-            df_select = df_clean[df_clean["country"].isin(countries)]
+            # TODO possibly delete this?
+            # df_select = df_clean[df_clean["country"].isin(countries)]
+
             # clean input DataFrame of unwanted columns
             for column in df:  # iterate over column lables
                 # check for unwanted columns
@@ -298,7 +303,8 @@ datasets = ['countries_selection.csv', 'countries_populations.xls',
             'countries_account_balance.xls']
 
 # object instantiation
-clist = CountryData('countries_selection.csv', datasets, columns_unwanted)
+clist = CountryData('countries_selection.csv', datasets, columns_unwanted,
+                    column_renames)
 
 # use the get_data method to draw out a DataFrame
 drawnDataFrame = clist.get_data()

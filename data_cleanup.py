@@ -271,8 +271,10 @@ for key, value in testcall.items():
 # looks like I may have been confused and should be trying the concat() method
 # df_concat = pd.concat([df_clean_cmatch, df_clean_amatch])
 # sucess.. concat() is the correct method for this
-# we've only got 80 entries... why is this?
+# =============================================================================
+# Why do we have 80 entries in df_concat?
 # lets filter countries for !isin() to see what didn't make the final cut
 # looks like drop() function is the way to go
-# dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
+dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
 # sucess... now I can analyze the 20 or so countries that are missing
+# =============================================================================
