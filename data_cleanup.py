@@ -277,4 +277,52 @@ for key, value in testcall.items():
 # looks like drop() function is the way to go
 dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
 # sucess... now I can analyze the 20 or so countries that are missing
+# are we accounting for aliases in this analysis?
+# we are not... so we need to run dropframe against aliaslist as well
+# droplist = []
+# for column in dropframe.items():  # iterate over missing countries
+#     for country in column[1]:  # 2nd item will be country alias lists
+#         print(country)
+#         print(type(country))
+#         test = country
+#         if type(country) is not float and country[0] in aliaslist:
+#             droplist.append(country[0])
+# ok... so now droplist is a list of all that should be dropped from dropframe
+# but we need to cross this to the country name
+# crossdroplist = []
+# for column in dropframe.items():  # iterate over missing countries
+#     for item in column.items()
+#         if item in droplist:
+#             crossdroplist.append(country)
+# dropframe = dropframe.drop(dropframe[dropframe["country"].isin(droplist)].index)
 # =============================================================================
+# =============================================================================
+# This isn't working well. I need to try a different approach.
+# =============================================================================
+df_clean_aliased = pd.DataFrame(df_clean)
+for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+    index = tup[0]  # store index
+    series = tup[1]  # store series
+    country = tup[1][0]  # store country
+    for tup in countries.iterrows():  # iterate over rows in country DataFrame
+        index = tup[0]  # store index
+        series = tup[1]  # store series
+        country_correct = series[0]  # store country
+        country_aliases = series[1]
+        print('country_aliases is')
+        print(country_aliases)
+        print('type is:')
+        print(type(country_aliases))
+        #print(country_aliases is <class 'list'>)
+        print()
+        if country_aliases is not float:
+            break
+        if country_aliases is type(list):
+            print('country alias found')
+            print(country)
+            print(country_aliases)
+            if country in country_aliases:  # check aliases for the country
+                df_clean_aliased.at[index, 'country'] = country_correct  # set country
+    # df_clean_amatch_corrected[index]
+    #break
+    
