@@ -74,13 +74,11 @@ class CountryData(object):
             # draw out the country column
             c_select = pd.DataFrame(countries_selection['country'], dtype=str)
             # build an empty alias dataframe to append on
-            # alias_df = pd.DataFrame({'aliases': ['']})
             emptylists = []  # empty list to append lists to
             for iteration in range(len(c_select)):  # iterate for each country
                 emptylists.append([])
             alias_df = pd.DataFrame({'aliases': emptylists})
             join_df = c_select.join(alias_df)  # append countries with aliases
-            print(alias_df)
             return join_df
 
         def dataset_clean(countries, df, columns_unwanted, column_renames):
@@ -130,7 +128,7 @@ class CountryData(object):
                     del df_clean[str(column)]  # delete it
 
             # rename columns based on column_renames
-            df_clean = df_clean.rename(columns = column_renames)
+            df_clean = df_clean.rename(columns=column_renames)
 
             # part 1: instantiate a df based on country filter
             df_clean_cmatch = df_clean[df_clean["country"].isin(countries["country"])]
@@ -172,23 +170,9 @@ class CountryData(object):
                 print('series is: ', series)
 
                 #for index, value in countries["country"].items():
-                    #if country in value 
-# =============================================================================
-#             # iterate over each DataFrame index row
-#             for country in df["Country Name"]:  # iterate over rows
-#                 match = False  # match trigger
-#                 # iterate over select country primary names
-#                 for select_country in countries["country"]:
-#                     if country == select_country:  # primary name match
-#                         match = True
-#                 # iterate over select country aliases
-#                 for select_aliases in countries["country"]:  # alias list
-#                     for alias in select_aliases:  # alias
-#                         if alias == select_country:  # alias match
-#                             match = True
-#                 if match is True:  # match was found
+                    #if country in value found
 #                     # append the data
-#                     # set 
+#                     # set
 #             return df_clean
 # =============================================================================
         self.columns_unwanted = columns_unwanted
@@ -207,7 +191,7 @@ class CountryData(object):
         self.datasets = datasets  # list of dataset filenames
         self.df_raw = []  # list of raw dataframes before processing
         self.df_processed = []  # list of processed dataframes
-            
+
     def get_data(self, datasets=[]):  # TODO dataset specification
         """Return cleaned DataFrames from the parent CountryData class.
 
