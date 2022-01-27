@@ -299,52 +299,34 @@ dropframe = countries.drop(countries[countries["country"].isin(df_concat["countr
 # =============================================================================
 # This isn't working well. I need to try a different approach.
 # =============================================================================
-# df_clean_aliased = pd.DataFrame(df_clean)
-# for tup in df_clean.iterrows():  # iterate over rows in DataFrame
-#     index = tup[0]  # store index
-#     series = tup[1]  # store series
-#     country = tup[1][0]  # store country
-#     print('countries tuple for loop beginning')
-#     for tup in countries.iterrows():  # iterate over rows in country DataFrame
-#         index = tup[0]  # store index
-#         series = tup[1]  # store series
-#         country_correct = series[0]  # store country
-#         country_aliases = series[1]
-#         print('country_aliases is')
-#         print(country_aliases)
-#         print('country correct is')
-#         print(country_correct)
-#         #print(country_aliases is <class 'list'>)
-#         print()
-#         if country_aliases != []:
-#             print('country aliases are present')
-#             for alias in country_aliases:  # iterate over each alias
-#                 # print('alias loop begin, alias is :', alias, 'country is ', country)
-#                 if country == alias:
-#                     print('alias match found')
-#                     print('alias is :', alias)
-#                 # if len(country_aliases) == 1:
-#                 #     print('break triggered')
-#                 #     break
-#                 # if 'United States' in country_aliases:
-#                 #     print('break triggered')
-#                 #     break
-#             break
-#         if country == 'USA':
-#             print('break triggered')
-#             break
-#     if country == 'United States':
-#         print('break triggered')
-#         break
-#             # print(country)
-#             # print(country_aliases)
-#             # if country in country_aliases:  # check aliases for the country
-#             #     df_clean_aliased.at[index, 'country'] = country_correct  # set country
-#     # df_clean_amatch_corrected[index]
-#     #break
 # =============================================================================
 # Ok... so 3 weeks later...
 # It appears I sucessfully reworked iteration over the countries dataframe
 # likely the next step here is to move toward building the final dataset, based
 # on iteration matches in the countries list and associated aliases... line 160
 # =============================================================================
+# =============================================================================
+# Correction... I need to work from the draft code below
+# =============================================================================
+
+# build a new DataFrame from code run through line 131
+# this will serve as the target DataFrame to mute
+df_clean_aliased = pd.DataFrame(df_clean)
+
+# rename DataFrame country column entries to conform with countries DataFrame
+for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+    df_clean_index = tup[0]  # store clean index... the mute target
+    df_clean_series = tup[1]  # store clean series... contains the country
+    df_clean_country = tup[1][0]  # store mute target country
+    for tup in countries.iterrows():  # iterate over rows in country DataFrame
+        index = tup[0]  # store countries index
+        series = tup[1]  # store countries series
+        country_correct = series[0]  # store country
+        country_aliases = series[1]  # store aliases
+        if country_aliases != []:  # aliases are present
+            # print('country aliases are present')
+            for alias in country_aliases:  # iterate over each alias
+                if df_clean_country == alias:  # entry matches a known alias
+                    # mute df_clean_alised to conform -> countries DataFrame
+                    df_clean_aliased.loc[df_clean_index, 'country'] = country_correct
+    #break

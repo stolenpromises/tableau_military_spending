@@ -130,6 +130,63 @@ class CountryData(object):
             # rename columns based on column_renames
             df_clean = df_clean.rename(columns=column_renames)
 
+            # rename DataFrame 'country' values to conform with countries
+            # instatiate target DataFrame for muting operation
+            df_clean_aliased = pd.DataFrame(df_clean)
+            for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+                df_clean_index = tup[0]  # store clean index... the mute target
+                df_clean_country = tup[1][0]  # store mute target country
+                # iterate over rows in country DataFrame
+                for tup in countries.iterrows():
+                    index = tup[0]  # store countries index
+                    series = tup[1]  # store countries series
+                    country_correct = series[0]  # store country
+                    country_aliases = series[1]  # store aliases
+                    if country_aliases != []:  # aliases are present
+                        # iterate over each alias
+                        for alias in country_aliases:
+                            # check for match to alias
+                            if df_clean_country == alias:
+                                # mute df_clean_alised
+                                df_clean_aliased.loc[df_clean_index, 'country'
+                                                     ] = country_correct
+            # target dataFrame now conforms with countries
+            df_clean = pd.DataFrame(df_clean_aliased)  # reassignment
+
+            # remove rows not found in countries DataFrame 'country'
+            # instatiate target DataFrame for muting operation
+            df_clean_pruned = pd.DataFrame(df_clean)
+            sliced = df_clean_pruned[df_clean_pruned["country"].isin(countries['country'])]
+            # above code is working. only getting 80 entries
+            # gotta figure out why this is and probably implement
+            # an add country method
+            for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+                df_clean_index = tup[0]  # store clean index... the mute target
+                df_clean_country = tup[1][0]  # store mute target country
+                # iterate over rows in country DataFrame
+                for tup in countries.iterrows():
+                    index = tup[0]  # store countries index
+                    country = tup[1][0]  # store countries series
+                    country_correct = series[0]  # store country
+                    country_aliases = series[1]  # store aliases
+                    if country_aliases != []:  # aliases are present
+                        # iterate over each alias
+                        for alias in country_aliases:
+                            # check for match to alias
+                            if df_clean_country == alias:
+                                # mute df_clean_alised
+                                df_clean_aliased.loc[df_clean_index, 'country'
+                                                     ] = country_correct
+            df_clean_pruned.loc[[['country']=countries['country']]]
+            
+            #
+            
+
+
+
+
+
+
             # part 1: instantiate a df based on country filter
             df_clean_cmatch = df_clean[df_clean["country"].isin(countries["country"])]
 
