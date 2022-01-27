@@ -154,12 +154,9 @@ class CountryData(object):
             df_clean = pd.DataFrame(df_clean_aliased)  # reassignment
 
             # remove rows not found in countries DataFrame 'country'
-            # instatiate target DataFrame for muting operation
-            df_clean_pruned = pd.DataFrame(df_clean)
-            sliced = df_clean_pruned[df_clean_pruned["country"].isin(countries['country'])]
-            # above code is working. only getting 80 entries
-            # gotta figure out why this is and probably implement
-            dropframe = countries.drop(countries[countries["country"].isin(sliced["country"])].index)
+            df_clean_sliced = df_clean[df_clean["country"].isin(countries['country'])]
+            # compute countries that may be missing from df_clean
+            dropframe = countries.drop(countries[countries["country"].isin(df_clean_sliced["country"])].index)
             
             # an add country method
 
