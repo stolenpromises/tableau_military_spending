@@ -159,6 +159,8 @@ class CountryData(object):
             sliced = df_clean_pruned[df_clean_pruned["country"].isin(countries['country'])]
             # above code is working. only getting 80 entries
             # gotta figure out why this is and probably implement
+            dropframe = countries.drop(countries[countries["country"].isin(sliced["country"])].index)
+            
             # an add country method
 
 ### draft iteration implementation alternative to .isin method for pruning
@@ -379,7 +381,7 @@ class CountryData(object):
         print()
         return()
 
-    def get_alias(self, country):
+    def set_country(self, country):
         """Return a list of aliases for a given country.
 
         Parameters
@@ -444,8 +446,10 @@ clist.set_alias('Russia', "Russian Federation")
 clist.set_alias('USA', "United States")
 clist.set_alias('Viet Nam', "Vietnam")
 clist.set_alias('Venezuela', "Venezuela, RB")
-
+clist.set_alias('UK', "United Kingdom")
+clist.set_alias('Syria', "Syrian Arab Republic")
 clist.set_alias('Iran', "Iran, Islamic Rep.")
+clist.set_alias('Yemen', "Yemen, Rep.")
 # clist.set_alias('Iran', "Iran, Islamic Rep")
 drawnDataFrame = clist.get_data()  # use the get_data method to return updated DataFrame
 
