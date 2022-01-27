@@ -308,25 +308,27 @@ dropframe = countries.drop(countries[countries["country"].isin(df_concat["countr
 # =============================================================================
 # Correction... I need to work from the draft code below
 # =============================================================================
-
+### implemented in countrydata dataset clean method
 # build a new DataFrame from code run through line 131
 # this will serve as the target DataFrame to mute
-df_clean_aliased = pd.DataFrame(df_clean)
+# df_clean_aliased = pd.DataFrame(df_clean)
 
 # rename DataFrame country column entries to conform with countries DataFrame
-for tup in df_clean.iterrows():  # iterate over rows in DataFrame
-    df_clean_index = tup[0]  # store clean index... the mute target
-    df_clean_series = tup[1]  # store clean series... contains the country
-    df_clean_country = tup[1][0]  # store mute target country
-    for tup in countries.iterrows():  # iterate over rows in country DataFrame
-        index = tup[0]  # store countries index
-        series = tup[1]  # store countries series
-        country_correct = series[0]  # store country
-        country_aliases = series[1]  # store aliases
-        if country_aliases != []:  # aliases are present
-            # print('country aliases are present')
-            for alias in country_aliases:  # iterate over each alias
-                if df_clean_country == alias:  # entry matches a known alias
-                    # mute df_clean_alised to conform -> countries DataFrame
-                    df_clean_aliased.loc[df_clean_index, 'country'] = country_correct
-    #break
+# for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+#     df_clean_index = tup[0]  # store clean index... the mute target
+#     df_clean_series = tup[1]  # store clean series... contains the country
+#     df_clean_country = tup[1][0]  # store mute target country
+#     for tup in countries.iterrows():  # iterate over rows in country DataFrame
+#         index = tup[0]  # store countries index
+#         series = tup[1]  # store countries series
+#         country_correct = series[0]  # store country
+#         country_aliases = series[1]  # store aliases
+#         if country_aliases != []:  # aliases are present
+#             # print('country aliases are present')
+#             for alias in country_aliases:  # iterate over each alias
+#                 if df_clean_country == alias:  # entry matches a known alias
+#                     # mute df_clean_alised to conform -> countries DataFrame
+#                     df_clean_aliased.loc[df_clean_index, 'country'] = country_correct
+# =============================================================================
+# OK... I am sucessfully pruning
+# =============================================================================

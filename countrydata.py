@@ -160,77 +160,75 @@ class CountryData(object):
             # above code is working. only getting 80 entries
             # gotta figure out why this is and probably implement
             # an add country method
-            for tup in df_clean.iterrows():  # iterate over rows in DataFrame
-                df_clean_index = tup[0]  # store clean index... the mute target
-                df_clean_country = tup[1][0]  # store mute target country
-                # iterate over rows in country DataFrame
-                for tup in countries.iterrows():
-                    index = tup[0]  # store countries index
-                    country = tup[1][0]  # store countries series
-                    country_correct = series[0]  # store country
-                    country_aliases = series[1]  # store aliases
-                    if country_aliases != []:  # aliases are present
-                        # iterate over each alias
-                        for alias in country_aliases:
-                            # check for match to alias
-                            if df_clean_country == alias:
-                                # mute df_clean_alised
-                                df_clean_aliased.loc[df_clean_index, 'country'
-                                                     ] = country_correct
-            df_clean_pruned.loc[[['country']=countries['country']]]
-            
-            #
-            
 
+### draft iteration implementation alternative to .isin method for pruning
+# =============================================================================
+#             for tup in df_clean.iterrows():  # iterate over rows in DataFrame
+#                 df_clean_index = tup[0]  # store clean index... the mute target
+#                 df_clean_country = tup[1][0]  # store mute target country
+#                 # iterate over rows in country DataFrame
+#                 for tup in countries.iterrows():
+#                     index = tup[0]  # store countries index
+#                     country = tup[1][0]  # store countries series
+#                     country_correct = series[0]  # store country
+#                     country_aliases = series[1]  # store aliases
+#                     if country_aliases != []:  # aliases are present
+#                         # iterate over each alias
+#                         for alias in country_aliases:
+#                             # check for match to alias
+#                             if df_clean_country == alias:
+#                                 # mute df_clean_alised
+#                                 df_clean_aliased.loc[df_clean_index, 'country'
+#                                                      ] = country_correct
+# =============================================================================
 
-
-
-
-
-            # part 1: instantiate a df based on country filter
-            df_clean_cmatch = df_clean[df_clean["country"].isin(countries["country"])]
-
-            # part 2: instantiate a df based on alias filter
-            # part 2a: build an aliastlist superset
-            aliaslist = []  # superset to append to
-            correctionlist = []
-            for value in countries["aliases"]:  # iterate: aliases series
-                if type(value) is list:  # aliases are present
-                    for item in value:  # iterate over the aliases
-                        aliaslist.append(item)  # append the alias
-            # rework
-            # aliaslist = []  # superset to append to
-            # correctionlist = []
-            # for index, country, aliases in df_clean['index', 'country', 'aliases':
-            #     print(index)
-            # part 2b instantiate a df with alias matches
-            df_clean_amatch = df_clean[df_clean["country"].isin(aliaslist)]
-            #part 2ba correct alias matches to conform with country names
-            df_clean_amatch_corrected = pd.DataFrame(df_clean_amatch)
-            # for alias in df_clean_amatch["country"]:  # iterate countries
-            #     country = 
-            # part 3: concatinate part 1/2 DataFrames
-            df_concat = pd.concat([df_clean_cmatch, df_clean_amatch])
-
-            # revised iteration over DataFrame rows
-            # iterate over select countries and aliases as a series
-            for label, series in countries.items():  # pull each series
-                for index, c_clean in df_clean['country'].items():
-                    print('c_clean is: ', c_clean)
-                # iterate over all countries and aliases
-                if c_clean in series:
-                    test = 'match'
-                    break
-                else:
-                    print('no match')
-                print('label is: ', label)
-                print('series is: ', series)
-
-                #for index, value in countries["country"].items():
-                    #if country in value found
-#                     # append the data
-#                     # set
-#             return df_clean
+### old revision code which i ditched
+# =============================================================================
+#             # part 1: instantiate a df based on country filter
+#             df_clean_cmatch = df_clean[df_clean["country"].isin(countries["country"])]
+# 
+#             # part 2: instantiate a df based on alias filter
+#             # part 2a: build an aliastlist superset
+#             aliaslist = []  # superset to append to
+#             correctionlist = []
+#             for value in countries["aliases"]:  # iterate: aliases series
+#                 if type(value) is list:  # aliases are present
+#                     for item in value:  # iterate over the aliases
+#                         aliaslist.append(item)  # append the alias
+#             # rework
+#             # aliaslist = []  # superset to append to
+#             # correctionlist = []
+#             # for index, country, aliases in df_clean['index', 'country', 'aliases':
+#             #     print(index)
+#             # part 2b instantiate a df with alias matches
+#             df_clean_amatch = df_clean[df_clean["country"].isin(aliaslist)]
+#             #part 2ba correct alias matches to conform with country names
+#             df_clean_amatch_corrected = pd.DataFrame(df_clean_amatch)
+#             # for alias in df_clean_amatch["country"]:  # iterate countries
+#             #     country = 
+#             # part 3: concatinate part 1/2 DataFrames
+#             df_concat = pd.concat([df_clean_cmatch, df_clean_amatch])
+# 
+#             # revised iteration over DataFrame rows
+#             # iterate over select countries and aliases as a series
+#             for label, series in countries.items():  # pull each series
+#                 for index, c_clean in df_clean['country'].items():
+#                     print('c_clean is: ', c_clean)
+#                 # iterate over all countries and aliases
+#                 if c_clean in series:
+#                     test = 'match'
+#                     break
+#                 else:
+#                     print('no match')
+#                 print('label is: ', label)
+#                 print('series is: ', series)
+# 
+#                 #for index, value in countries["country"].items():
+#                     #if country in value found
+# #                     # append the data
+# #                     # set
+# #             return df_clean
+# =============================================================================
 # =============================================================================
         self.columns_unwanted = columns_unwanted
         self.column_renames = column_renames
