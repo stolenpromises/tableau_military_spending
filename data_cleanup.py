@@ -332,3 +332,4 @@ dropframe = countries.drop(countries[countries["country"].isin(df_concat["countr
 # =============================================================================
 # OK... I am sucessfully pruning
 # =============================================================================
+dropframe = countries.drop(countries[countries["country"].isin(sliced["country"])].index)

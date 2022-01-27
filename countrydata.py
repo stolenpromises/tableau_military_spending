@@ -304,7 +304,7 @@ class CountryData(object):
 
         # print confirmation and the outcome
         print()
-        print('country DataFrame updated')
+        print('countries DataFrame updated')
         print(self.countries.loc[countries['country'] == country])
         print()
         return()
@@ -347,6 +347,75 @@ class CountryData(object):
             print()
             return()
 
+    def add_country(self, country, aliases=[]):
+        """Append a country and alliases to the countries DataFrame.
+
+        Parameters
+        ----------
+        country : STR
+            Country name.
+        alias : LIST of STR
+            Associated alliases.
+
+        Returns
+        -------
+        print() statement confirming the addition.
+
+        """
+        # # TODO test variables
+        # country = 'Venezuela'
+        # aliases = ['Ven', 'Zuela']
+
+        # build a DataFrame to append from
+        append_df = pd.DataFrame([[country, aliases]], columns=['country',
+                                                                'aliases'])
+        # append to countries
+        self.countries = self.countries.append(append_df)
+
+        # print confirmation and the outcome
+        print()
+        print('countries DataFrame updated')
+        print(self.countries.loc[self.countries['country'] == country])
+        print()
+        return()
+
+    def get_alias(self, country):
+        """Return a list of aliases for a given country.
+
+        Parameters
+        ----------
+        country : STR
+            Country name.
+
+        Returns
+        -------
+        aliaslist : LIST
+            A list of aliases resolved from the parent CountryData object.
+
+        """
+        # check for the country within CountryData.countries DataFrame
+        countries = self.countries  # abstraction for code simplification
+        if country in countries['country'].values:
+            # a match has been found - get the alias
+            # abstract out the target country
+            target_c = countries.loc[countries['country'] == country]
+            target_index = target_c.index.tolist()[0]  # country index
+            existing_aliases = countries.at[target_index, 'aliases']
+            if type(existing_aliases) is float:  # no aliases exist
+                print()
+                print('No aliases for', country)
+                print()
+                return()
+            else:  # aliases exist
+                print()
+                print(country, ' aliases are:', existing_aliases)
+                print()
+                return()
+        else:  # country not found in DataFrame
+            print()
+            print('Country not found in CountryData.countries')
+            print()
+            return()
 
 # unwanted columns that will be culled from all datasets
 columns_unwanted = ['Country Code']
@@ -374,12 +443,21 @@ clist.set_alias('Korea, South', "Korea, Rep.")
 clist.set_alias('Russia', "Russian Federation")
 clist.set_alias('USA', "United States")
 clist.set_alias('Viet Nam', "Vietnam")
+clist.set_alias('Venezuela', "Venezuela, RB")
+
+clist.set_alias('Iran', "Iran, Islamic Rep.")
+# clist.set_alias('Iran', "Iran, Islamic Rep")
 drawnDataFrame = clist.get_data()  # use the get_data method to return updated DataFrame
 
 # get_alias method test
 clist.get_alias('UAE')
 clist.get_alias('Taiwan')
 
+# append some missing countries via the add_country method
+# clist.add_country('Serbia')  # a country with no aliases
+
+# rename a country
+# clist.set_alias("German DR", 'Germany', )
 # output population DataFrame
 
 
