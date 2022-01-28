@@ -162,13 +162,6 @@ class CountryData(object):
                 Many column DataFrame containing relevant data for only select
                 countries
             """
-            # TODO testing DataFrame input
-            # countries = pd.DataFrame(drawnDataFrame)
-
-            # countries_populations = pd.read_excel(r'countries_population.xls')
-            # df = pd.DataFrame(countries_populations)
-            # TODO end testing DataFrame input
-
             df_clean = pd.DataFrame(df)  # output DataFrame to mute
 
             # clean input DataFrame of unwanted columns
@@ -210,9 +203,17 @@ class CountryData(object):
             dropframe = countries.drop(countries[countries["country"].isin
                                                  (df_clean_sliced["country"])
                                                  ].index)
+            print()
             print('Dataset processed')
             print('There were ', len(dropframe), 'country entries that may')
             print('have not been found in the dataset.')
+            print('they were:')
+            print()
+            for country in dropframe['country']:
+                print(country)
+
+            # target dataFrame now has been cleaned
+            df_clean = df_clean_sliced
 
             # return the cleaned DataFrame.
             return(df_clean)
@@ -238,11 +239,6 @@ class CountryData(object):
         self.df_raw = []  # list of raw dataframes before processing
         self.df_processed = []  # list of processed dataframes
 
-        # TODO test variables
-        # df_raw = []
-        # dataset = 'countries_population.xls'
-        # df_processed = []
-        # countries_selection = self.countries
         # for loop storing and cleaning datasets
         for dataset in self.datasets:  # loop over datasets
             filetype = dataset[-3:]  # identify the filetype
@@ -253,9 +249,9 @@ class CountryData(object):
                 self.df_raw.append(df)  # append in raw format
                 # call the clean method and append
                 self.df_processed.append(dataset_clean(self.countries,
-                                                  df, self.columns_unwanted,
-                                                  self.column_renames))
-
+                                                       df,
+                                                       self.columns_unwanted,
+                                                       self.column_renames))
 
     def get_data(self, datasets=[]):  # TODO dataset specification
         """Return cleaned DataFrames from the parent CountryData class.
@@ -273,10 +269,10 @@ class CountryData(object):
 
         Returns
         -------
-        datasets : LIST
-            List of DATAFRAME objects, country specific data.
+        datasets : TUPLE of DATAFRAME
+            countries_selection, LIST of processed DataFrames
         """
-        return(self.countries)
+        return(self.countries_selection, self.df_processed)
 
     def get_alias(self, country):
         """Return a list of aliases for a given country.
@@ -409,32 +405,29 @@ aliases = [('UAE', 'United Arab Emirates'),
            ('Yemen', "Yemen, Rep.")]
 
 # object instantiation
-clist = CountryData('countries_selection.csv', datasets, aliases, columns_unwanted,
-                    column_renames)
-
-# use the get_data method to draw out a DataFrame
-drawnDataFrame = clist.get_data()
-print(drawnDataFrame)  # print the dataframe
+clist = CountryData('countries_selection.csv', datasets, aliases,
+                    columns_unwanted, column_renames)
 
 # set_alias() method test
 # clist.set_alias('Iran', "Iran, Islamic Rep")
 
 # get_alias method test
-clist.get_alias('UAE')
-clist.get_alias('Taiwan')
-
-# get_data() method test
-drawnDataFrame = clist.get_data()  # use the get_data method to return updated DataFrame
+# clist.get_alias('UAE')
+# clist.get_alias('Taiwan')
 
 # add_country() method test
 # clist.add_country('Serbia')  # a country with no aliases
 
-# rename a country
+# rename a country test
 # clist.set_alias("German DR", 'Germany', )
 # output population DataFrame
 
-#  test for sucessefull dataset processing
-processed_datasets = clist.df_processed
+# use the get_data method to draw out processed DataFrames
+drawnDataFrames = clist.get_data()
+countries_selection = drawnDataFrames[0]
+populations = drawnDataFrames[1][0]
+account_balance = drawnDataFrames[1][1]
+test = clist.df_processed
 # =============================================================================
 # TODO methods
 #        def add_country(self, country, aliases:
@@ -442,4 +435,3 @@ processed_datasets = clist.df_processed
 #         def clr_country:
 #         def get_countries:
 # =============================================================================
-
