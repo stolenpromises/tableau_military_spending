@@ -275,7 +275,7 @@ for key, value in testcall.items():
 # Why do we have 80 entries in df_concat?
 # lets filter countries for !isin() to see what didn't make the final cut
 # looks like drop() function is the way to go
-dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
+# dropframe = countries.drop(countries[countries["country"].isin(df_concat["country"])].index)
 # sucess... now I can analyze the 20 or so countries that are missing
 # are we accounting for aliases in this analysis?
 # we are not... so we need to run dropframe against aliaslist as well
@@ -332,4 +332,25 @@ dropframe = countries.drop(countries[countries["country"].isin(df_concat["countr
 # =============================================================================
 # OK... I am sucessfully pruning
 # =============================================================================
-dropframe = countries.drop(countries[countries["country"].isin(sliced["country"])].index)
+#  dropframe = countries.drop(countries[countries["country"].isin(sliced["country"])].index)
+# Moving now toward:
+#   1. on init -> for loop over object.datasets
+#       1a. call store method
+#           a. store raw
+#           b. pass to dataset_clean
+#           c. store clean
+#           d. pass dataset path into dataset_clean
+#   2. on method call to object
+#       2a. call store method
+#           a. store raw
+#           b. pass to dataset_clean
+#           c. store clean
+#           d. pass dataset path into dataset_clean
+# =============================================================================
+# time to move toward implementing the above plan
+# =============================================================================
+# will a for loop over a blank list generate an error?
+# test = []
+# for item in test:
+#     print('herp')
+# nope, we are good
