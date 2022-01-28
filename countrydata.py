@@ -157,7 +157,9 @@ class CountryData(object):
             df_clean_sliced = df_clean[df_clean["country"].isin(countries['country'])]
             # compute countries that may be missing from df_clean
             dropframe = countries.drop(countries[countries["country"].isin(df_clean_sliced["country"])].index)
-            
+            print('Dataset processed')
+            print('There were ', len(dropframe), 'country entries that may')
+            print('have not been found in the dataset.')
             # an add country method
 
 ### draft iteration implementation alternative to .isin method for pruning
