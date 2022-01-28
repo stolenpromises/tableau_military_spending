@@ -13,11 +13,13 @@ import os
 # TODO remove sys, not needed
 import sys
 #
+
+# TODO update parameter defintions
 class CountryData(object):
     """Collection of country names, aliases and associated data."""
 
     def __init__(self, country_csv, datasets, aliases, columns_unwanted=[],
-                 column_renames=[]):
+                 column_renames=[], country_clrs=[]):
         """Instatiates an CountryData object instance.
 
         Stores a pandas DataFrame of countries as imported from a csv file.
@@ -33,6 +35,7 @@ class CountryData(object):
                 ('country', 'country alias')
                 ex:
                 ('UAE', 'United Arab Emirates')
+
         Returns
         -------
         None.
@@ -132,6 +135,72 @@ class CountryData(object):
             print(self.countries.loc[countries['country'] == country])
             print()
             return()
+
+        def set_country(self, c_from, c_to):
+            """Change an existing country entry.
+
+            Parameters
+            ----------
+            c_from : STR
+                Country to change.
+            c_to : STR
+                Name to change the country to.
+
+            Returns
+            -------
+            aliaslist : LIST
+                A list of aliases resolved from the parent CountryData object.
+
+            """
+            # check for the country within CountryData.countries DataFrame
+            countries = self.countries  # abstraction for code simplification
+            if c_from in countries['country'].values:
+                # a match has been found
+                # abstract out the target country
+                target_c = countries.loc[countries['country'] == c_from]
+                target_index = target_c.index.tolist()[0]  # country index
+                countries.loc[[target_index], ['country']] = c_to  # mute entry
+                self.countries = countries
+                print()
+                print(c_from, ' changed to:', countries.loc[[target_index],
+                                                            ['country']])
+                print()
+                return()
+            else:  # country not found in DataFrame
+                print()
+                print('Country not found in CountryData.countries')
+                print()
+                return()
+
+        def clr_country(self, country):
+            """Change an existing country entry.
+
+            Parameters
+            ----------
+            country : STR
+                Country to clear.
+
+            Returns
+            -------
+            None
+
+            """
+            # check for the country within CountryData.countries DataFrame
+            countries = self.countries  # abstraction for code simplification
+            if country in countries['country'].values:
+                # a match has been found
+                # abstract out the target country
+                countries = countries[countries['country'] != country]
+                self.countries = countries
+                print()
+                print(country, ' removed from DataFrame')
+                print()
+                return()
+            else:  # country not found in DataFrame
+                print()
+                print('Country not found in CountryData.countries')
+                print()
+                return()
 
         def dataset_clean(countries, df, columns_unwanted, column_renames):
             """Return a processed dataframe based on a selection of countries.
@@ -234,6 +303,12 @@ class CountryData(object):
         for alias_tup in aliases:  # iterate over alias tuples
             # call the set alias method on that tuple
             set_alias(alias_tup[0], alias_tup[1])
+        print(country_clrs)
+
+        for country in country_clrs:  # iterate over country clears
+            print(country)
+            # sys.exit()
+            clr_country(self, country)  # clear the country
 
         self.datasets = datasets  # list of dataset filenames
         self.df_raw = []  # list of raw dataframes before processing
@@ -253,7 +328,7 @@ class CountryData(object):
                                                        self.columns_unwanted,
                                                        self.column_renames))
 
-    def get_data(self, datasets=[]):  # TODO dataset specification
+    def get_data(self):
         """Return cleaned DataFrames from the parent CountryData class.
 
         Parameters
@@ -341,43 +416,7 @@ class CountryData(object):
         return()
 
     # TODO
-    def set_country(self, country):
-        """Return a list of aliases for a given country.
 
-        Parameters
-        ----------
-        country : STR
-            Country name.
-
-        Returns
-        -------
-        aliaslist : LIST
-            A list of aliases resolved from the parent CountryData object.
-
-        """
-        # check for the country within CountryData.countries DataFrame
-        countries = self.countries  # abstraction for code simplification
-        if country in countries['country'].values:
-            # a match has been found - get the alias
-            # abstract out the target country
-            target_c = countries.loc[countries['country'] == country]
-            target_index = target_c.index.tolist()[0]  # country index
-            existing_aliases = countries.at[target_index, 'aliases']
-            if type(existing_aliases) is float:  # no aliases exist
-                print()
-                print('No aliases for', country)
-                print()
-                return()
-            else:  # aliases exist
-                print()
-                print(country, ' aliases are:', existing_aliases)
-                print()
-                return()
-        else:  # country not found in DataFrame
-            print()
-            print('Country not found in CountryData.countries')
-            print()
-            return()
 
 
 # unwanted columns that will be culled from all datasets
@@ -404,9 +443,15 @@ aliases = [('UAE', 'United Arab Emirates'),
            ('Iran', "Iran, Islamic Rep."),
            ('Yemen', "Yemen, Rep.")]
 
+# correct these country names - not yet needed, but the method is functional
+# c_corrections = [('Germany DR]
+
+# clear these unwanted countries
+country_clrs = ['German DR']
+
 # object instantiation
 clist = CountryData('countries_selection.csv', datasets, aliases,
-                    columns_unwanted, column_renames)
+                    columns_unwanted, column_renames, country_clrs)
 
 # set_alias() method test
 # clist.set_alias('Iran', "Iran, Islamic Rep")
