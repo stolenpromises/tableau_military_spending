@@ -409,7 +409,7 @@ aliases = [('UAE', 'United Arab Emirates'),
            ('Yemen', "Yemen, Rep.")]
 
 # object instantiation
-clist = CountryData('countries_selection.csv', aliases, datasets, columns_unwanted,
+clist = CountryData('countries_selection.csv', datasets, aliases, columns_unwanted,
                     column_renames)
 
 # use the get_data method to draw out a DataFrame
