@@ -415,9 +415,6 @@ class CountryData(object):
         print()
         return()
 
-    # TODO
-
-
 
 # unwanted columns that will be culled from all datasets
 columns_unwanted = ['Country Code']
@@ -472,11 +469,8 @@ drawnDataFrames = clist.get_data()
 countries_selection = drawnDataFrames[0]
 populations = drawnDataFrames[1][0]
 account_balance = drawnDataFrames[1][1]
-test = clist.df_processed
-# =============================================================================
-# TODO methods
-#        def add_country(self, country, aliases:
-#             """ Append a country to AliasLookup."""
-#         def clr_country:
-#         def get_countries:
-# =============================================================================
+
+# examine how the DataSets started
+temp = clist.df_raw
+
+# should try adding processing for countries_selection for just data
