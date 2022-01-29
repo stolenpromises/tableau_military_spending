@@ -8,7 +8,8 @@ Created on Sat Dec 18 13:14:19 2021
 @author: nathan.m
 """
 import pandas as pd
-# import os
+import os
+from pathlib import Path
 # import sys
 #
 
@@ -484,7 +485,12 @@ clist = CountryData('countries_selection.csv', datasets, aliases,
 
 # use the get_data method to draw out processed DataFrames
 drawnDataFrames = clist.get_data()
-countries = drawnDataFrames[0]
-per_cap_spending = drawnDataFrames[1][0]
-populations = drawnDataFrames[1][1]
-account_balance = drawnDataFrames[1][2]
+df_dict = {'countries': drawnDataFrames[0],
+           'per_cap_spending': drawnDataFrames[1][0],
+           'populations': drawnDataFrames[1][1],
+           'account_balance': drawnDataFrames[1][2]}
+
+# output processed datsets for import into tableau
+for key in df_dict:  # iterate over each key
+    pathname = os.path.join('dataset', 'processed', str(key) + '.csv')  # path
+    df_dict[str(key)].to_csv(pathname)  # output as csv
