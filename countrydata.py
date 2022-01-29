@@ -192,9 +192,9 @@ class CountryData(object):
                 # abstract out the target country
                 countries = countries[countries['country'] != country]
                 self.countries = countries
-                print()
-                print(country, ' removed from DataFrame')
-                print()
+                # print()
+                # print(country, ' removed from DataFrame')
+                # print()
                 return()
             else:  # country not found in DataFrame
                 print()
@@ -249,12 +249,7 @@ class CountryData(object):
             # sys.exit()
             for tup in df_clean.iterrows():  # iterate over rows in DataFrame
                 df_clean_index = tup[0]  # store clean index... the mute target
-                print(tup[0])
-                print(tup[1])
-                print(type(tup[1]))
-                tup[1]
-                sys.exit()
-                df_clean_country = tup[1][0]  # store mute target country
+                df_clean_country = tup[1]['country']  # store target country
                 # iterate over rows in country DataFrame
                 for tup in countries.iterrows():
                     series = tup[1]  # store countries series
@@ -363,7 +358,7 @@ class CountryData(object):
         datasets : TUPLE of DATAFRAME
             countries_selection, LIST of processed DataFrames
         """
-        return(self.countries_selection, self.df_processed)
+        return(self.countries, self.df_processed)
 
     def get_alias(self, country):
         """Return a list of aliases for a given country.
@@ -484,11 +479,7 @@ clist = CountryData('countries_selection.csv', datasets, aliases,
 
 # use the get_data method to draw out processed DataFrames
 drawnDataFrames = clist.get_data()
-countries_selection = drawnDataFrames[0]
-populations = drawnDataFrames[1][0]
-account_balance = drawnDataFrames[1][1]
-
-# examine how the DataSets started
-temp = clist.df_raw
-
-# should try adding processing for countries_selection for just data
+countries = drawnDataFrames[0]
+per_cap_spending = drawnDataFrames[1][0]
+populations = drawnDataFrames[1][1]
+account_balance = drawnDataFrames[1][2]
