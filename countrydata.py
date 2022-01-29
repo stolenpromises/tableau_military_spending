@@ -130,10 +130,10 @@ class CountryData(object):
                 return()
 
             # print confirmation and the outcome
-            print()
-            print('countries DataFrame updated')
-            print(self.countries.loc[countries['country'] == country])
-            print()
+            # print()
+            # print('countries DataFrame updated')
+            # print(self.countries.loc[countries['country'] == country])
+            # print()
             return()
 
         def set_country(self, c_from, c_to):
@@ -245,8 +245,15 @@ class CountryData(object):
             # rename DataFrame 'country' values to conform with countries
             # instatiate target DataFrame for muting operation
             df_clean_aliased = pd.DataFrame(df_clean)
+            # print(df_clean.head())
+            # sys.exit()
             for tup in df_clean.iterrows():  # iterate over rows in DataFrame
                 df_clean_index = tup[0]  # store clean index... the mute target
+                print(tup[0])
+                print(tup[1])
+                print(type(tup[1]))
+                tup[1]
+                sys.exit()
                 df_clean_country = tup[1][0]  # store mute target country
                 # iterate over rows in country DataFrame
                 for tup in countries.iterrows():
@@ -258,7 +265,7 @@ class CountryData(object):
                         for alias in country_aliases:
                             # check for match to alias
                             if df_clean_country == alias:
-                                # mute df_clean_alised
+                                # mute df_clean_aliased
                                 df_clean_aliased.loc[df_clean_index, 'country'
                                                      ] = country_correct
             # target dataFrame now conforms with countries
@@ -317,10 +324,19 @@ class CountryData(object):
         # for loop storing and cleaning datasets
         for dataset in self.datasets:  # loop over datasets
             filetype = dataset[-3:]  # identify the filetype
-            if 'countries_selection' in dataset:  # set is the country list
-                continue  # skip the current iteration
             if filetype == 'xls':
                 df = pd.read_excel(dataset)  # store the DataFrame
+                self.df_raw.append(df)  # append in raw format
+                # call the clean method and append
+                self.df_processed.append(dataset_clean(self.countries,
+                                                       df,
+                                                       self.columns_unwanted,
+                                                       self.column_renames))
+            if filetype == 'csv':
+                df = pd.read_csv(dataset)  # store the DataFrame
+            # check for a missing header
+                if df.columns[0] != 'country':  # country NOT found
+                    df = add_column_labels(dataset)  # send for labelling
                 self.df_raw.append(df)  # append in raw format
                 # call the clean method and append
                 self.df_processed.append(dataset_clean(self.countries,
@@ -409,10 +425,10 @@ class CountryData(object):
         self.countries = self.countries.append(append_df)
 
         # print confirmation and the outcome
-        print()
-        print('countries DataFrame updated')
-        print(self.countries.loc[self.countries['country'] == country])
-        print()
+        # print()
+        # print('countries DataFrame updated')
+        # print(self.countries.loc[self.countries['country'] == country])
+        # print()
         return()
 
 
@@ -423,8 +439,10 @@ columns_unwanted = ['Country Code']
 column_renames = {'Country Name': 'country'}
 
 # input datasets
-datasets = ['countries_selection.csv', 'countries_population.xls',
+datasets = ['countries_per-cap.csv', 'countries_population.xls',
             'countries_account_balance.xls']
+# datasets = ['countries_population.xls',
+#             'countries_account_balance.xls']
 
 # set_aliases for missing countries from the selection
 aliases = [('UAE', 'United Arab Emirates'),
