@@ -8,13 +8,11 @@ Created on Sat Dec 18 13:14:19 2021
 @author: nathan.m
 """
 import pandas as pd
-import numpy as np
-import os
-# TODO remove sys, not needed
-import sys
+# import os
+# import sys
 #
 
-# TODO update parameter defintions
+
 class CountryData(object):
     """Collection of country names, aliases and associated data."""
 
@@ -26,7 +24,7 @@ class CountryData(object):
 
         Parameters
         ----------
-        countries : STR
+        country_csv : STR
             String of csv filename containing countries.
         datasets: LIST of STR
             List of csv or xls filenames containing data for processing
@@ -35,6 +33,13 @@ class CountryData(object):
                 ('country', 'country alias')
                 ex:
                 ('UAE', 'United Arab Emirates')
+        columns_unwanted : LIST of STR
+            Unwanted columns for removal
+        column_renames : DICT
+            Lookups for column names and desired renames.
+                ex : {'Country Name': 'country'}
+        country_clrs : LIST of STR
+            Countries to clear from datasets.
 
         Returns
         -------
